@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<!--
+ *
+ *
+ * This source code is licensed under the MIT license found in the
+ * MIT-LICENSE file in the root directory of this source tree.
+ *
+ *
+ 
+-->
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Diffraction Visor</title>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+  <script>
+  function CheckDecimal(inputtxt,space)
+  {
+    var decimal=  /[^a-zA-Z]+$/;
+    if(inputtxt.value.match(decimal))
+    {
+      //alert('Correct, try another...')
+      return true;
+    }
+    else
+    {
+      alert('put a float or integer, in '+space+' field');
+      return false;
+    }
+  }
+  </script>
+</head>
+<body bgcolor=#67FFFE>
+  <form action="blackBox1.php" method="post">
+    <div class="jumbotron text-center">
+      <h1>Diffraction Visor</h1>
+    </br>
+    <img src="images/AzaarProgramming_01.png" class="rounded-circle h-25 w-25"
+    alt="Azaar AzaarProgramming_01">
+  </div>
+  <div class="container">
+    <table class="table">
+      <caption>Set the parameters to see phase pattern!</caption>
+      <tbody>
+    <tr>
+      <td>
+        <label>parameter a (nm): </label>
+      <input type="text" class="form-control" name="paramA" id="paramA">
+    </td>
+      <td>
+        <label>parameter b (nm): </label>
+        <input type="text" class="form-control" name="paramB" id="paramB">
+      </td>
+      <td>
+        <label>parameter c (nm): </label>
+        <input type="text" class="form-control" name="paramC" id="paramC">
+      </td>
+      <td>
+        <label>alfa &alpha; (°): </label>
+        <input type="text" class="form-control" name="alfa" id="alfa">
+      </td>
+      <td>
+        <label>beta &beta; (°): </label>
+        <input type="text" class="form-control" name="beta" id="beta">
+      </td>
+      <td>
+        <label>gamma &gamma; (°): </label>
+        <input type="text" class="form-control" name="gamma" id="gamma">
+      </td>
+      <td>
+        <label>over X (min 2, max 6): </label>
+        <input type="text" class="form-control" name="numX" id="numX">
+      </td>
+      <td>
+        <label>over Y (min 2, max 6): </label>
+        <input type="text" class="form-control" name="numY" id="numY">
+      </td>
+      <td>
+        <label>over Z (min 2, max 6): </label>
+        <input type="text" class="form-control" name="numZ" id="numZ">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label>Acceleration Voltage (from  20 000 to 100 000 volts):</label>
+        <input type="text" class="form-control" name="voltage" id="voltage">
+      </td>
+      <td>
+        <label>Angle of Rotation over &psi;: </label>
+        <input type="text" class="form-control" name="psi" id="psi">
+      </td>
+      <td>
+        <label>Angle of Rotation over &phi;: </label>
+        <input type="text" class="form-control" name="phi" id="phi">
+      </td>
+      <td>
+        <label>Angle of Rotation over &theta;: </label>
+        <input type="text" class="form-control"name="tetha" id="tetha">
+      </td>
+      <td>
+        <div class="card" style="width:150px">
+          <img class="card-img-top" src="images/triclinic.svg">
+          <div class="card-body">
+            <p class="card-text">Primitive Cell (P)
+              <input type="radio" name="crystalline" value="primitive" checked></p>
+            </div>
+          </div>
+      </td>
+      <td>
+        <div class="card" style="width:150px">
+          <img class="card-img-top" src="images/Monoclinic-base-centered.svg">
+          <div class="card-body">
+            <p class="card-text">Base Cell (B)
+              <input type="radio" name="crystalline" value="base"></p>
+            </div>
+          </div>
+      </td>
+      <td>
+        <div class="card" style="width:150px">
+          <img class="card-img-top" src="images/Orthorhombic-body-centered.svg">
+          <div class="card-body">
+            <p class="card-text">Inner Cell (I)
+              <input type="radio" name="crystalline" value="inner"></p>
+            </div>
+          </div>
+      </td>
+      <td>
+        <div class="card" style="width:150px">
+          <img class="card-img-top" src="images/Cubic-face-centered.svg">
+          <div class="card-body">
+            <p class="card-text">Face Cell (F)
+              <input type="radio" name="crystalline" value="face"></p>
+            </div>
+          </div>
+      </td>
+      <td>
+        <h3>Element:</h3>
+        <select name="elements" id="elements" size="5">
+          <option value="1">H</option>
+          <option value="2">He</option>
+          <option value="3">Li</option>
+          <option value="4">Be</option>
+          <option value="5">B</option>
+          <option value="6">C</option>
+          <option value="7">N</option>
+          <option value="8">O</option>
+          <option value="9">F</option>
+          <option value="10">Ne</option>
+          <option value="11">Na</option>
+          <option value="12">Mg</option>
+          <option value="13">Al</option>
+          <option value="14">Si</option>
+          <option value="15">P</option>
+          <option value="16">S</option>
+          <option value="17">Cl</option>
+          <option value="18">Ar</option>
+          <option value="19">K</option>
+          <option value="20">Ca</option>
+          <option value="21">Sc</option>
+          <option value="22">Ti</option>
+          <option value="23">V</option>
+          <option value="24">Cr</option>
+          <option value="25">Mn</option>
+          <option value="26">Fe</option>
+          <option value="27">Co</option>
+          <option value="28">Ni</option>
+          <option value="29">Cu</option>
+          <option value="30">Zn</option>
+          <option value="31">Ga</option>
+          <option value="32">Ge</option>
+          <option value="33">As</option>
+          <option value="34">Se</option>
+          <option value="35">Br</option>
+          <option value="36">Kr</option>
+          <option value="37" selected>Rb</option>
+          <option value="38">Sr</option>
+          <option value="39">Y</option>
+          <option value="40">Zr</option>
+          <option value="41">Nb</option>
+          <option value="42">Mo</option>
+          <option value="43">Tc</option>
+          <option value="44">Ru</option>
+          <option value="45">Rh</option>
+          <option value="46">Pd</option>
+          <option value="47">Ag</option>
+          <option value="48">Cd</option>
+          <option value="49">In</option>
+          <option value="50">Sn</option>
+          <option value="51">Sb</option>
+          <option value="52">Te</option>
+          <option value="53">I</option>
+          <option value="54">Xe</option>
+          <option value="55">Cs</option>
+          <option value="56">Ba</option>
+          <option value="57">La</option>
+          <option value="58">Ce</option>
+          <option value="59">Pr</option>
+          <option value="60">Nd</option>
+          <option value="61">Pm</option>
+          <option value="62">Sm</option>
+          <option value="63">Eu</option>
+          <option value="64">Gd</option>
+          <option value="65">Tb</option>
+          <option value="66">Dy</option>
+          <option value="67">Ho</option>
+          <option value="68">Er</option>
+          <option value="69">Tm</option>
+          <option value="70">Yb</option>
+          <option value="71">Lu</option>
+          <option value="72">Hf</option>
+          <option value="73">Ta</option>
+          <option value="74">W</option>
+          <option value="75">Re</option>
+          <option value="76">Os</option>
+          <option value="77">Ir</option>
+          <option value="78">Pt</option>
+          <option value="79">Au</option>
+          <option value="80">Hg</option>
+          <option value="81">Tl</option>
+          <option value="82">Pb</option>
+          <option value="83">Bi</option>
+          <option value="84">Po</option>
+          <option value="85">At</option>
+          <option value="86">Rn</option>
+          <option value="87">Fr</option>
+          <option value="88">Ra</option>
+          <option value="89">Ac</option>
+          <option value="90">Th</option>
+          <option value="91">Pa</option>
+          <option value="92">U</option>
+          <option value="93">Np</option>
+          <option value="94">Pu</option>
+          <option value="95">Am</option>
+          <option value="96">Cm</option>
+          <option value="97">Bk</option>
+          <option value="98">Cf</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <button type="submit" class="btn btn-info" id="okButton">Load Model</button>
+      </td>
+      <td>
+        <button type="button"class="btn btn-success" data-toggle="modal"
+        data-target="#exampleCase">Help</button>
+      </td>
+    </tr>
+  </tbody>
+    </table>
+  </div>
+      <script>
+      const field1 = document.getElementById('paramA');
+      const field2 = document.getElementById('paramB');
+      const field3 = document.getElementById('paramC');
+      const field4 = document.getElementById('alfa');
+      const field5 = document.getElementById('beta');
+      const field6 = document.getElementById('gamma');
+      const field7 = document.getElementById('numX');
+      const field8 = document.getElementById('numY');
+      const field9 = document.getElementById('numZ');
+      const field10 = document.getElementById('psi');
+      const field11 = document.getElementById('phi');
+      const field12 = document.getElementById('tetha');
+      const field13 = document.getElementById('voltage');
+      field1.addEventListener('keyup',function(event)
+      {
+        var isValid1;
+        isValid1=CheckDecimal(field1,'paramA');
+        if(isValid1)
+        {
+          okButton.disabled = false;
+        }
+        else
+        {
+          okButton.disabled = true;
+        }
+      });
+      field2.addEventListener('keyup',function(event)
+      {
+        var isValid2;
+        isValid2=CheckDecimal(field2,'paramB');
+        if(isValid2)
+        {
+          okButton.disabled = false;
+        }
+        else
+        {
+          okButton.disabled = true;
+        }
+      });
+      field3.addEventListener('keyup',function(event)
+      {
+        var isValid3;
+        isValid3=CheckDecimal(field3,'paramC');
+        if(isValid3)
+        {
+          okButton.disabled = false;
+        }
+        else
+        {
+          okButton.disabled = true;
+        }
+      });
+      field4.addEventListener('keyup',function(event)
+      {
+        var isValid4;
+        isValid4=CheckDecimal(field4,'alfa');
+        if(isValid4)
+        {
+          okButton.disabled = false;
+        }
+        else
+        {
+          okButton.disabled = true;
+        }
+      });
+      field5.addEventListener('keyup',function(event)
+      {
+        var isValid5;
+        isValid5=CheckDecimal(field5,'beta');
+        if(isValid5)
+        {
+          okButton.disabled = false;
+        }
+        else
+        {
+          okButton.disabled = true;
+        }
+      });
+      field6.addEventListener('keyup',function(event)
+      {
+        var isValid6;
+        isValid6=CheckDecimal(field6,'gamma');
+        if(isValid6)
+        {
+          okButton.disabled = false;
+        }
+        else
+        {
+          okButton.disabled = true;
+        }
+      });
+      field7.addEventListener('keyup',function(event)
+      {
+        var isValid7;
+        isValid7=CheckDecimal(field7,'numX');
+        if(isValid7)
+        {
+          okButton.disabled = false;
+        }
+        else
+        {
+          okButton.disabled = true;
+        }
+      });
+      field8.addEventListener('keyup',function(event)
+      {
+        var isValid8;
+        isValid8=CheckDecimal(field8,'numY');
+        if(isValid8)
+        {
+          okButton.disabled = false;
+        }
+        else
+        {
+          okButton.disabled = true;
+        }
+      });
+      field9.addEventListener('keyup',function(event)
+      {
+        var isValid9;
+        isValid9=CheckDecimal(field9,'numZ');
+        if(isValid9)
+        {
+          okButton.disabled = false;
+        }
+        else
+        {
+          okButton.disabled = true;
+        }
+      });
+      field10.addEventListener('keyup',function(event)
+      {
+        var isValid10;
+        isValid10=CheckDecimal(field10,'psi');
+        if(isValid10)
+        {
+          okButton.disabled = false;
+        }
+        else
+        {
+          okButton.disabled = true;
+        }
+      });
+      field11.addEventListener('keyup',function(event)
+      {
+        var isValid11;
+        isValid11=CheckDecimal(field11,'phi');
+        if(isValid11)
+        {
+          okButton.disabled = false;
+        }
+        else
+        {
+          okButton.disabled = true;
+        }
+      });
+      field12.addEventListener('keyup',function(event)
+      {
+        var isValid12;
+        isValid12=CheckDecimal(field12,'tetha');
+        if(isValid12)
+        {
+          okButton.disabled = false;
+        }
+        else
+        {
+          okButton.disabled = true;
+        }
+      });
+      field13.addEventListener('keyup',function(event)
+      {
+        var isValid13;
+        isValid13=CheckDecimal(field13,'voltage');
+        if(isValid13)
+        {
+          okButton.disabled = false;
+        }
+        else
+        {
+          okButton.disabled = true;
+        }
+      });
+    </script>
+<div class="modal fade" id="exampleCase">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Case example</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>You can use as a measure of length,height and deep of the cell: 4*4*4 nm</p>
+        <ul>
+          <li>parameter a (nm): 4</li>
+          <li>parameter b (nm): 4</li>
+          <li>parameter c (nm): 4</li>
+        </ul>
+      </br>
+      <p>Then the angle that define the cell(as example a cube would be):</p>
+      <ul>
+        <li>alfa &alpha; (°): 90</li>
+        <li>beta &beta; (°): 90</li>
+        <li>gamma &gamma; (°): 90</li>
+      </ul>
+      <p>The number of cells for each axis:</p>
+      <ul>
+        <li>over X axis (min 2, max 8): 2</li>
+        <li>over Y axis (min 2, max 8): 2</li>
+        <li>over Z axis (min 2, max 8): 2</li>
+      </ul>
+      <p>The angle of rotation of all the cells (in this case 90°, over each axis):</p>
+      <ul>
+        <li>over &psi;:90</li>
+        <li>over &phi;:90</li>
+        <li>over &theta;:90</li>
+      </ul>
+      <p>The Acceleration voltage apply to the sample (this function as contrast more voltage, more consistent image)
+        in a range of 20 000 to 100 000 volts; in the image the example is 80000 volts.</p>
+      </br>
+      <p>The type of the crystalline System, can be Primitive, Base, Inner and Face (in the image is Primitive).</p>
+    </br>
+    <p>The element from the cell is made (in the example image is Ti, latter will be add the option to molecules of more elements).
+      Remember as a rule of thumb, more heavier elements are easier to see.</p>
+    </div>
+    <!-- Modal footer -->
+    <div class="modal-footer">
+      <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+    </div>
+  </div>
+</div>
+</div>
+</form>
+</body>
+</html>
