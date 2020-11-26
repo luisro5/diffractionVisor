@@ -211,8 +211,28 @@ to all the petitions and changes, but for now please send to:
 luisro5@hotmail.com
 luisro5azaar@gmail.com
 ```
-
-
 ## License
 
 DiffractionVisor is released under the [MIT License](https://opensource.org/licenses/MIT).
+
+### Author
+
+* **Luis Roberto Azaar Meza** (CFATA, UNAM)
+
+### Reference
+
+Azaar Meza, Luis Roberto. (2015). "Simulación de estructuras cristalinas y de formación de patrones de difracción de electrones". (Tesis de Maestría). Universidad Nacional Autónoma de México, México. Recuperado de https://repositorio.unam.mx/contenidos/65327
+```
+@article{Simulación de estructuras cristalinas y de formación de patrones de difracción de electrones,
+  title={Simulación de estructuras cristalinas y de formación de patrones de difracción de electrones},
+  author={Azaar Meza, Luis Roberto},
+  journal={https://repositorio.unam.mx/contenidos/65327},
+  year={2015}
+}
+```
+
+### Contact
+
+```bash
+e-mail:luisro5azaar@gmail.com
+```
